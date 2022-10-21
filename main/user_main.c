@@ -50,30 +50,29 @@ static void gpio_isr_handler(void *arg)
     xQueueSendFromISR(gpio_evt_queue, &gpio_num, NULL);
 }
 
-static void gpio_task(void *arg)
+static void gpio_task1(void *arg)
 {
     uint32_t io_num;
 
     for (;;) {
         if (xQueueReceive(gpio_evt_queue, &io_num, portMAX_DELAY)) {
             ESP_LOGI(TAG, "GPIO[%d] intr, val: %d\n", io_num, gpio_get_level(io_num));
-			if (gpio_get_level(io_num) == 0){
-				ESP_LOGI(TAG, "LED On\n");
-				gpio_set_level(GPIO_OUTPUT_IO,1);
-			}
-			else{
-				ESP_LOGI(TAG,"LED Off\n");
-				gpio_set_level(GPIO_OUTPUT_IO,0);
-			}
+			gpio_set_level(GPIO_OUTPUT_IO,1);
 			vTaskDelay(1000 / portTICK_PERIOD_MS);
 		}
     }
 }
 
+static void gpio_task2(void *arg)
+{
+
+
+}
+
 void app_main(void)
 {
     gpio_config_t io_conf;
-	
+
     //disable interrupt
     io_conf.intr_type = GPIO_INTR_DISABLE;
     //set as output mode
@@ -100,10 +99,14 @@ void app_main(void)
     //change gpio intrrupt type for one pin
     gpio_set_intr_type(GPIO_INPUT_IO, GPIO_INTR_NEGEDGE);
 
-    //create a queue to handle gpio event from isr
-    gpio_evt_queue = xQueueCreate(10, sizeof(uint32_t));
-    //start gpio task
-    xTaskCreate(gpio_task, "gpio_task", 2048, NULL, 10, NULL);
+    //create a mutux for the tasks
+    
+    //start gpio task 1
+    xTaskCreate(gpio_task1, "gpio_task1", 2048, NULL, 10, NULL);
+
+    xTaskCreate(gpio_task2, "gpio_task2", 2048, NULL, 10, NULL);
+
+    xTaskCreate(gpio_task3, "gpio_task3", 2048, NULL, 10, NULL);
 
     //install gpio isr service
     gpio_install_isr_service(0);
@@ -119,7 +122,6 @@ void app_main(void)
     int cnt = 0;
 
     while (1) {
-        gpio_set_level(GPIO_OUTPUT_IO,0);
         vTaskDelay(1000 / portTICK_RATE_MS);
     }
 }
