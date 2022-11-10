@@ -15,6 +15,8 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "freertos/queue.h"
+// Semaphore header file 
+#include "freertos/semphr.h"
 
 #include "driver/gpio.h"
 
@@ -37,36 +39,93 @@ static const char *TAG = "main";
 #define GPIO_OUTPUT_IO			2
 #define GPIO_OUTPUT_PIN_SEL 	(1ULL << GPIO_OUTPUT_IO)
 
-//GPIO0 set as input button
-#define GPIO_INPUT_IO			0
-#define GPIO_INPUT_PIN_SEL 		(1ULL << GPIO_INPUT_IO)
+/* Declaring variable type of SemaphoreHandle_t */
+SemaphoreHandle_t xMutex = NULL;
 
+unsigned int delay_count;
 
-static xQueueHandle gpio_evt_queue = NULL;
+static void task1_on(void * pvParameters);
+static void task1_off(void * pvParameters);
+static void task1_print(void * pvParameters);
 
-static void gpio_isr_handler(void *arg)
+static void task1_on(void *pvParameters)
 {
-    uint32_t gpio_num = (uint32_t) arg;
-    xQueueSendFromISR(gpio_evt_queue, &gpio_num, NULL);
-}
-
-static void gpio_task1(void *arg)
-{
-    uint32_t io_num;
-
-    for (;;) {
-        if (xQueueReceive(gpio_evt_queue, &io_num, portMAX_DELAY)) {
-            ESP_LOGI(TAG, "GPIO[%d] intr, val: %d\n", io_num, gpio_get_level(io_num));
-			gpio_set_level(GPIO_OUTPUT_IO,1);
-			vTaskDelay(1000 / portTICK_PERIOD_MS);
+	while (1) {
+		if( xMutex != NULL ){
+			
+			/* See if we can obtain the semaphore.  If the semaphore is not
+			available wait 10 ticks to see if it becomes free. */
+			if ( xSemaphoreTake( xMutex, ( TickType_t ) 10) == pdTRUE){
+				/* Turn LED ON */
+				gpio_set_level(GPIO_OUTPUT_IO, 1);
+				ESP_LOGI(TAG,"GPIO2 PIN set to %d : LED is ON\n", gpio_get_level(GPIO_OUTPUT_IO));
+				
+				/* Actively wait 0.5s */
+				while (delay_count != 2650000){
+					delay_count++;
+				}
+				
+				ESP_LOGI(TAG, "Task 1 completed.\n");
+				delay_count=0;
+			
+				/* Release Mutex*/
+				xSemaphoreGive(xMutex);
+			
+				/* Task delay 1s */
+				vTaskDelay(1000/portTICK_RATE_MS);
+			}
+			else{
+				ESP_LOGI(TAG,"Task 1 could not obtain Semaphore.\n")
+				/* We could not obtain the semaphore and can therefore not access
+				the shared resource safely. */
+			}
 		}
-    }
+	}
 }
 
-static void gpio_task2(void *arg)
+static void task2_off(void *pvParameters)
 {
+	while (1) {
+		if( xMutex != NULL ){
+			
+			/* See if we can obtain the semaphore.  If the semaphore is not
+			available wait 10 ticks to see if it becomes free. */
+			if ( xSemaphoreTake( xMutex, ( TickType_t ) 10) == pdTRUE){
+				/* Turn LED ON */
+				gpio_set_level(GPIO_OUTPUT_IO, 0);
+				ESP_LOGI(TAG,"GPIO2 PIN set to %d : LED is OFF\n", gpio_get_level(GPIO_OUTPUT_IO));
+				
+				/* Actively wait 0.5s */
+				while (delay_count != 2650000){
+					delay_count++;
+				}
+				
+				ESP_LOGI(TAG, "Task 2 completed.\n");
+				delay_count=0;
+			
+				/* Release Mutex*/
+				xSemaphoreGive(xMutex);
+			
+				/* Task delay 1s */
+				vTaskDelay(1000/portTICK_RATE_MS);
+			}
+			else{
+				ESP_LOGI(TAG,"Task 2 could not obtain Semaphore.\n")
+				/* We could not obtain the semaphore and can therefore not access
+				the shared resource safely. */
+			}
+		}
+	}
+}
 
-
+static void task3_print(void *pvParameters){
+	while(1){
+		ESP_LOGI(TAG,"STATUS of GPIO2: %d\n", gpio_get_level(GPIO_OUTPUT_IO));
+		ESP_LOGI(TAG,"Task 3 completed.\n");
+		
+		/* Task delay 1s */
+		vTaskDelay(1000/portTICK_RATE_MS);
+	}
 }
 
 void app_main(void)
@@ -86,43 +145,14 @@ void app_main(void)
     //configure GPIO with the given settings
     gpio_config(&io_conf);
 
-    //interrupt of falling edge
-    io_conf.intr_type = GPIO_INTR_NEGEDGE;
-    //bit mask of the pins, use GPIO0 here
-    io_conf.pin_bit_mask = GPIO_INPUT_PIN_SEL;
-    //set as input mode
-    io_conf.mode = GPIO_MODE_INPUT;
-    //enable pull-up mode
-    io_conf.pull_up_en = 1;
-    gpio_config(&io_conf);
-
-    //change gpio intrrupt type for one pin
-    gpio_set_intr_type(GPIO_INPUT_IO, GPIO_INTR_NEGEDGE);
-
+	delay_count = 0;
     //create a mutux for the tasks
-    
-    //start gpio task 1
-    xTaskCreate(gpio_task1, "gpio_task1", 2048, NULL, 10, NULL);
+    xMutex = xSemaphoreCreateMutex();
+	
+    xTaskCreate(task1_on, "LED ON", 2048, NULL, 3, NULL);
 
-    xTaskCreate(gpio_task2, "gpio_task2", 2048, NULL, 10, NULL);
+    xTaskCreate(task2_off, "LED OFF", 2048, NULL, 2, NULL);
 
-    xTaskCreate(gpio_task3, "gpio_task3", 2048, NULL, 10, NULL);
-
-    //install gpio isr service
-    gpio_install_isr_service(0);
-    //hook isr handler for specific gpio pin
-    gpio_isr_handler_add(GPIO_INPUT_IO, gpio_isr_handler, (void *) GPIO_INPUT_IO);
-
-
-    //remove isr handler for gpio number.
-    gpio_isr_handler_remove(GPIO_INPUT_IO);
-    //hook isr handler for specific gpio pin again
-    gpio_isr_handler_add(GPIO_INPUT_IO, gpio_isr_handler, (void *) GPIO_INPUT_IO);
-
-    int cnt = 0;
-
-    while (1) {
-        vTaskDelay(1000 / portTICK_RATE_MS);
-    }
+    xTaskCreate(task3_print, "Print Status", 2048, NULL, 1, NULL);
 }
 
