@@ -65,7 +65,7 @@ static void task1_on(void *pvParameters)
 					delay_count++;
 				}
 				
-				ESP_LOGI(TAG, "Task 1 completed.\n");
+				ESP_LOGI(TAG, "Task 1 completed...\n");
 				delay_count=0;
 			
 				/* Release Mutex*/
@@ -75,7 +75,7 @@ static void task1_on(void *pvParameters)
 				vTaskDelay(1000/portTICK_RATE_MS);
 			}
 			else{
-				ESP_LOGI(TAG,"Task 1 could not obtain Semaphore.\n")
+				ESP_LOGI(TAG,"Task 1 could not obtain Semaphore...\n")
 				/* We could not obtain the semaphore and can therefore not access
 				the shared resource safely. */
 			}
@@ -100,7 +100,7 @@ static void task2_off(void *pvParameters)
 					delay_count++;
 				}
 				
-				ESP_LOGI(TAG, "Task 2 completed.\n");
+				ESP_LOGI(TAG, "Task 2 completed...\n");
 				delay_count=0;
 			
 				/* Release Mutex*/
@@ -110,7 +110,7 @@ static void task2_off(void *pvParameters)
 				vTaskDelay(1000/portTICK_RATE_MS);
 			}
 			else{
-				ESP_LOGI(TAG,"Task 2 could not obtain Semaphore.\n")
+				ESP_LOGI(TAG,"Task 2 could not obtain Semaphore...\n")
 				/* We could not obtain the semaphore and can therefore not access
 				the shared resource safely. */
 			}
@@ -121,7 +121,7 @@ static void task2_off(void *pvParameters)
 static void task3_print(void *pvParameters){
 	while(1){
 		ESP_LOGI(TAG,"STATUS of GPIO2: %d\n", gpio_get_level(GPIO_OUTPUT_IO));
-		ESP_LOGI(TAG,"Task 3 completed.\n");
+		ESP_LOGI(TAG,"Task 3 completed...\n");
 		
 		/* Task delay 1s */
 		vTaskDelay(1000/portTICK_RATE_MS);
