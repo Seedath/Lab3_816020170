@@ -75,7 +75,7 @@ static void task1_on(void *pvParameters)
 				vTaskDelay(1000/portTICK_RATE_MS);
 			}
 			else{
-				ESP_LOGI(TAG,"Task 1 could not obtain Semaphore...\n")
+				ESP_LOGI(TAG,"Task 1 could not obtain Semaphore...\n");
 				/* We could not obtain the semaphore and can therefore not access
 				the shared resource safely. */
 			}
@@ -110,7 +110,7 @@ static void task2_off(void *pvParameters)
 				vTaskDelay(1000/portTICK_RATE_MS);
 			}
 			else{
-				ESP_LOGI(TAG,"Task 2 could not obtain Semaphore...\n")
+				ESP_LOGI(TAG,"Task 2 could not obtain Semaphore...\n");
 				/* We could not obtain the semaphore and can therefore not access
 				the shared resource safely. */
 			}
