@@ -160,6 +160,8 @@ void app_main(void)
 	
 	if(handle != NULL){
 		vTaskDelete(handle);
+	}else {
+		ESP_LOGI(TAG, "Error: Print Status(1) did not run\n");
 	}
 
 	/*Stub to set the LED to 0*/
@@ -167,6 +169,12 @@ void app_main(void)
 
 	/*RTOS task function to call task3_print*/
 	xTaskCreate(task3_print, "Print Status", 2048, NULL, 3, &handle);
+	
+	if(handle != NULL){
+		vTaskDelete(handle);
+	}else {
+		ESP_LOGI(TAG, "Error: Print Status(2) did not run\n");
+	}
 
 	/* Commented out to run Unit test
     xTaskCreate(task1_on, "LED ON", 2048, NULL, 3, NULL);
