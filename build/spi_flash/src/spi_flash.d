@@ -4,7 +4,7 @@ src/spi_flash.o: \
  /opt/esp_sdk/ESP8266_RTOS_SDK/components/esp_common/include/esp_err.h \
  /opt/esp_sdk/ESP8266_RTOS_SDK/components/esp8266/include/esp8266/spi_register.h \
  /opt/esp_sdk/ESP8266_RTOS_SDK/components/esp8266/include/esp8266/eagle_soc.h \
- /home/akshayseedath/esp/gpio/build/include/sdkconfig.h \
+ /home/akshayseedath/esp/lab3/gpio/build/include/sdkconfig.h \
  /opt/esp_sdk/ESP8266_RTOS_SDK/components/esp8266/include/driver/soc.h \
  /opt/esp_sdk/ESP8266_RTOS_SDK/components/esp8266/include/esp8266/pin_mux_register.h \
  /opt/esp_sdk/ESP8266_RTOS_SDK/components/esp8266/include/esp8266/eagle_soc.h \
@@ -29,7 +29,7 @@ src/spi_flash.o: \
 
 /opt/esp_sdk/ESP8266_RTOS_SDK/components/esp8266/include/esp8266/eagle_soc.h:
 
-/home/akshayseedath/esp/gpio/build/include/sdkconfig.h:
+/home/akshayseedath/esp/lab3/gpio/build/include/sdkconfig.h:
 
 /opt/esp_sdk/ESP8266_RTOS_SDK/components/esp8266/include/driver/soc.h:
 

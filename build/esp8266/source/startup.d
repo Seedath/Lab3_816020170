@@ -1,6 +1,6 @@
 source/startup.o: \
  /opt/esp_sdk/ESP8266_RTOS_SDK/components/esp8266/source/startup.c \
- /home/akshayseedath/esp/gpio/build/include/sdkconfig.h \
+ /home/akshayseedath/esp/lab3/gpio/build/include/sdkconfig.h \
  /opt/esp_sdk/ESP8266_RTOS_SDK/components/nvs_flash/include/nvs_flash.h \
  /opt/esp_sdk/ESP8266_RTOS_SDK/components/nvs_flash/include/nvs.h \
  /opt/esp_sdk/ESP8266_RTOS_SDK/components/esp8266/include/esp_attr.h \
@@ -86,7 +86,7 @@ source/startup.o: \
  /opt/esp_sdk/ESP8266_RTOS_SDK/components/freertos/include/freertos/task.h \
  /opt/esp_sdk/ESP8266_RTOS_SDK/components/newlib/platform_include/esp_newlib.h
 
-/home/akshayseedath/esp/gpio/build/include/sdkconfig.h:
+/home/akshayseedath/esp/lab3/gpio/build/include/sdkconfig.h:
 
 /opt/esp_sdk/ESP8266_RTOS_SDK/components/nvs_flash/include/nvs_flash.h:
 

@@ -1,7 +1,7 @@
 src/ff.o: /opt/esp_sdk/ESP8266_RTOS_SDK/components/fatfs/src/ff.c \
  /opt/esp_sdk/ESP8266_RTOS_SDK/components/fatfs/src/ff.h \
  /opt/esp_sdk/ESP8266_RTOS_SDK/components/fatfs/src/ffconf.h \
- /home/akshayseedath/esp/gpio/build/include/sdkconfig.h \
+ /home/akshayseedath/esp/lab3/gpio/build/include/sdkconfig.h \
  /opt/esp_sdk/ESP8266_RTOS_SDK/components/freertos/include/freertos/FreeRTOS.h \
  /opt/esp_sdk/ESP8266_RTOS_SDK/components/freertos/port/esp8266/include/freertos/FreeRTOSConfig.h \
  /opt/esp_sdk/ESP8266_RTOS_SDK/components/esp8266/include/rom/ets_sys.h \
@@ -38,7 +38,7 @@ src/ff.o: /opt/esp_sdk/ESP8266_RTOS_SDK/components/fatfs/src/ff.c \
 
 /opt/esp_sdk/ESP8266_RTOS_SDK/components/fatfs/src/ffconf.h:
 
-/home/akshayseedath/esp/gpio/build/include/sdkconfig.h:
+/home/akshayseedath/esp/lab3/gpio/build/include/sdkconfig.h:
 
 /opt/esp_sdk/ESP8266_RTOS_SDK/components/freertos/include/freertos/FreeRTOS.h:
 

@@ -2,7 +2,7 @@ WL_Flash.o: \
  /opt/esp_sdk/ESP8266_RTOS_SDK/components/wear_levelling/WL_Flash.cpp \
  /opt/esp_sdk/ESP8266_RTOS_SDK/components/esp8266/include/esp_system.h \
  /opt/esp_sdk/ESP8266_RTOS_SDK/components/esp_common/include/esp_err.h \
- /home/akshayseedath/esp/gpio/build/include/sdkconfig.h \
+ /home/akshayseedath/esp/lab3/gpio/build/include/sdkconfig.h \
  /opt/esp_sdk/ESP8266_RTOS_SDK/components/esp8266/include/esp_idf_version.h \
  /opt/esp_sdk/ESP8266_RTOS_SDK/components/log/include/esp_log.h \
  /opt/esp_sdk/ESP8266_RTOS_SDK/components/esp8266/include/rom/ets_sys.h \
@@ -19,7 +19,7 @@ WL_Flash.o: \
 
 /opt/esp_sdk/ESP8266_RTOS_SDK/components/esp_common/include/esp_err.h:
 
-/home/akshayseedath/esp/gpio/build/include/sdkconfig.h:
+/home/akshayseedath/esp/lab3/gpio/build/include/sdkconfig.h:
 
 /opt/esp_sdk/ESP8266_RTOS_SDK/components/esp8266/include/esp_idf_version.h:
 

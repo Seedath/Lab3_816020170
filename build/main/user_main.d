@@ -1,7 +1,7 @@
-user_main.o: /home/akshayseedath/esp/gpio/main/user_main.c \
+user_main.o: /home/akshayseedath/esp/lab3/gpio/main/user_main.c \
  /opt/esp_sdk/ESP8266_RTOS_SDK/components/freertos/include/freertos/FreeRTOS.h \
  /opt/esp_sdk/ESP8266_RTOS_SDK/components/freertos/port/esp8266/include/freertos/FreeRTOSConfig.h \
- /home/akshayseedath/esp/gpio/build/include/sdkconfig.h \
+ /home/akshayseedath/esp/lab3/gpio/build/include/sdkconfig.h \
  /opt/esp_sdk/ESP8266_RTOS_SDK/components/esp8266/include/rom/ets_sys.h \
  /opt/esp_sdk/ESP8266_RTOS_SDK/components/esp8266/include/esp8266/eagle_soc.h \
  /opt/esp_sdk/ESP8266_RTOS_SDK/components/esp8266/include/driver/soc.h \
@@ -31,6 +31,8 @@ user_main.o: /home/akshayseedath/esp/gpio/main/user_main.c \
  /opt/esp_sdk/ESP8266_RTOS_SDK/components/freertos/include/freertos/task.h \
  /opt/esp_sdk/ESP8266_RTOS_SDK/components/freertos/include/freertos/private/list.h \
  /opt/esp_sdk/ESP8266_RTOS_SDK/components/freertos/include/freertos/queue.h \
+ /opt/esp_sdk/ESP8266_RTOS_SDK/components/freertos/include/freertos/semphr.h \
+ /opt/esp_sdk/ESP8266_RTOS_SDK/components/freertos/include/freertos/queue.h \
  /opt/esp_sdk/ESP8266_RTOS_SDK/components/esp8266/include/driver/gpio.h \
  /opt/esp_sdk/ESP8266_RTOS_SDK/components/esp8266/include/esp8266/pin_mux_register.h \
  /opt/esp_sdk/ESP8266_RTOS_SDK/components/esp8266/include/esp8266/eagle_soc.h \
@@ -44,7 +46,7 @@ user_main.o: /home/akshayseedath/esp/gpio/main/user_main.c \
 
 /opt/esp_sdk/ESP8266_RTOS_SDK/components/freertos/port/esp8266/include/freertos/FreeRTOSConfig.h:
 
-/home/akshayseedath/esp/gpio/build/include/sdkconfig.h:
+/home/akshayseedath/esp/lab3/gpio/build/include/sdkconfig.h:
 
 /opt/esp_sdk/ESP8266_RTOS_SDK/components/esp8266/include/rom/ets_sys.h:
 
@@ -104,6 +106,10 @@ user_main.o: /home/akshayseedath/esp/gpio/main/user_main.c \
 
 /opt/esp_sdk/ESP8266_RTOS_SDK/components/freertos/include/freertos/queue.h:
 
+/opt/esp_sdk/ESP8266_RTOS_SDK/components/freertos/include/freertos/semphr.h:
+
+/opt/esp_sdk/ESP8266_RTOS_SDK/components/freertos/include/freertos/queue.h:
+
 /opt/esp_sdk/ESP8266_RTOS_SDK/components/esp8266/include/driver/gpio.h:
 
 /opt/esp_sdk/ESP8266_RTOS_SDK/components/esp8266/include/esp8266/pin_mux_register.h:
@@ -119,4 +125,4 @@ user_main.o: /home/akshayseedath/esp/gpio/main/user_main.c \
 /opt/esp_sdk/ESP8266_RTOS_SDK/components/esp8266/include/esp_system.h:
 
 /opt/esp_sdk/ESP8266_RTOS_SDK/components/esp8266/include/esp_idf_version.h:
-/home/akshayseedath/esp/gpio/main/./user_main.c:
+/home/akshayseedath/esp/lab3/gpio/main/./user_main.c:

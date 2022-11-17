@@ -41,12 +41,13 @@ static const char *TAG = "main";
 
 /* Declaring variable type of SemaphoreHandle_t */
 SemaphoreHandle_t xMutex = NULL;
+TaskHandle_t handle = NULL;
 
 unsigned int delay_count;
 
-static void task1_on(void * pvParameters);
-static void task1_off(void * pvParameters);
-static void task1_print(void * pvParameters);
+static void task1_on(void *pvParameters);
+static void task2_off(void *pvParameters);
+static void task3_print(void *pvParameters);
 
 static void task1_on(void *pvParameters)
 {
@@ -65,7 +66,7 @@ static void task1_on(void *pvParameters)
 					delay_count++;
 				}
 				
-				ESP_LOGI(TAG, "Task 1 completed.\n");
+				ESP_LOGI(TAG, "Task 1 completed...\n");
 				delay_count=0;
 			
 				/* Release Mutex*/
@@ -75,7 +76,7 @@ static void task1_on(void *pvParameters)
 				vTaskDelay(1000/portTICK_RATE_MS);
 			}
 			else{
-				ESP_LOGI(TAG,"Task 1 could not obtain Semaphore.\n")
+				//ESP_LOGI(TAG,"Task 1 could not obtain Semaphore...\n");
 				/* We could not obtain the semaphore and can therefore not access
 				the shared resource safely. */
 			}
@@ -100,7 +101,7 @@ static void task2_off(void *pvParameters)
 					delay_count++;
 				}
 				
-				ESP_LOGI(TAG, "Task 2 completed.\n");
+				ESP_LOGI(TAG, "Task 2 completed...\n");
 				delay_count=0;
 			
 				/* Release Mutex*/
@@ -110,7 +111,7 @@ static void task2_off(void *pvParameters)
 				vTaskDelay(1000/portTICK_RATE_MS);
 			}
 			else{
-				ESP_LOGI(TAG,"Task 2 could not obtain Semaphore.\n")
+				//ESP_LOGI(TAG,"Task 2 could not obtain Semaphore...\n");
 				/* We could not obtain the semaphore and can therefore not access
 				the shared resource safely. */
 			}
@@ -121,7 +122,7 @@ static void task2_off(void *pvParameters)
 static void task3_print(void *pvParameters){
 	while(1){
 		ESP_LOGI(TAG,"STATUS of GPIO2: %d\n", gpio_get_level(GPIO_OUTPUT_IO));
-		ESP_LOGI(TAG,"Task 3 completed.\n");
+		ESP_LOGI(TAG,"Task 3 completed...\n");
 		
 		/* Task delay 1s */
 		vTaskDelay(1000/portTICK_RATE_MS);
@@ -149,10 +150,29 @@ void app_main(void)
     //create a mutux for the tasks
     xMutex = xSemaphoreCreateMutex();
 	
+	/*Unit Test for task3_print, i.e. Print Status, function*/
+	
+	/*Stub to set the LED to 1*/
+	gpio_set_level(GPIO_OUTPUT_IO, 1);
+	
+	/*RTOS task function to call task3_print*/
+    xTaskCreate(task3_print, "Print Status", 2048, NULL, 3, &handle);
+	
+	if(handle != NULL){
+		vTaskDelete(handle);
+	}
+
+	/*Stub to set the LED to 0*/
+	gpio_set_level(GPIO_OUTPUT_IO,0);
+
+	/*RTOS task function to call task3_print*/
+	xTaskCreate(task3_print, "Print Status", 2048, NULL, 3, &handle);
+
+	/* Commented out to run Unit test
     xTaskCreate(task1_on, "LED ON", 2048, NULL, 3, NULL);
 
     xTaskCreate(task2_off, "LED OFF", 2048, NULL, 2, NULL);
-
+	
     xTaskCreate(task3_print, "Print Status", 2048, NULL, 1, NULL);
+	*/
 }
-
