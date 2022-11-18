@@ -167,7 +167,8 @@ void app_main(void)
 	delay_count = 0;
     //create a mutux for the tasks
     xMutex = xSemaphoreCreateMutex();
-
+	
+	/*Create task using RTOS function to call the driver function for LED ON*/
 	xTaskCreate(drive_on,"Driver for LED ON", 2048, NULL, 3, &handle1);
 	
 	if(handle1 != NULL){
@@ -176,6 +177,7 @@ void app_main(void)
 		ESP_LOGI(TAG, "Error: drive_on did not run\n");
 	}
 
+	/*Create task using RTOS function to call the driver function for LED OFF*/
 	xTaskCreate(drive_off,"Driver for LED OFF", 2048, NULL, 2, &handle2);
 	
 	if(handle2 != NULL){
