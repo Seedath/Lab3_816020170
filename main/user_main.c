@@ -41,13 +41,14 @@ static const char *TAG = "main";
 
 /* Declaring variable type of SemaphoreHandle_t */
 SemaphoreHandle_t xMutex = NULL;
-TaskHandle_t handle = NULL;
+TaskHandle_t handle1 = NULL;
+TaskHandle_t handle2 = NULL;
 
 unsigned int delay_count;
 
 static void task1_on(void *pvParameters);
 static void task2_off(void *pvParameters);
-static void task3_print(void *pvParameters);
+//static void task3_print(void *pvParameters);
 
 static void task1_on(void *pvParameters)
 {
@@ -119,7 +120,7 @@ static void task2_off(void *pvParameters)
 	}
 }
 
-static void task3_print(void *pvParameters){
+static void task3_print(){
 	while(1){
 		ESP_LOGI(TAG,"STATUS of GPIO2: %d\n", gpio_get_level(GPIO_OUTPUT_IO));
 		ESP_LOGI(TAG,"Task 3 completed...\n");
@@ -127,6 +128,23 @@ static void task3_print(void *pvParameters){
 		/* Task delay 1s */
 		vTaskDelay(1000/portTICK_RATE_MS);
 	}
+}
+
+/*Driver functions to test task3_print*/
+static void drive_on(void *pvParameters){
+	/*Stub to set the LED to 1*/
+	gpio_set_level(GPIO_OUTPUT_IO, 1);
+	
+	/*RTOS task function to call task3_print*/
+    task3_print();
+}
+
+static void drive_off(void *pvParameters){
+	/*Stub to set the LED to 0*/
+	gpio_set_level(GPIO_OUTPUT_IO,0);
+
+	/*RTOS task function to call task3_print*/
+	task3_print();
 }
 
 void app_main(void)
@@ -149,25 +167,22 @@ void app_main(void)
 	delay_count = 0;
     //create a mutux for the tasks
     xMutex = xSemaphoreCreateMutex();
+
+	xTaskCreate(drive_on,"Driver for LED ON", 2048, NULL, 3, &handle1);
 	
-	/*Unit Test for task3_print, i.e. Print Status, function*/
-	
-	/*Stub to set the LED to 1*/
-	gpio_set_level(GPIO_OUTPUT_IO, 1);
-	
-	/*RTOS task function to call task3_print*/
-    xTaskCreate(task3_print, "Print Status", 2048, NULL, 3, &handle);
-	
-	if(handle != NULL){
-		vTaskDelete(handle);
+	if(handle1 != NULL){
+		vTaskDelete(handle1);
+	}else {
+		ESP_LOGI(TAG, "Error: drive_on did not run\n");
 	}
 
-	/*Stub to set the LED to 0*/
-	gpio_set_level(GPIO_OUTPUT_IO,0);
-
-	/*RTOS task function to call task3_print*/
-	xTaskCreate(task3_print, "Print Status", 2048, NULL, 3, &handle);
-
+	xTaskCreate(drive_off,"Driver for LED OFF", 2048, NULL, 2, &handle2);
+	
+	if(handle2 != NULL){
+		vTaskDelete(handle2);
+	}else {
+		ESP_LOGI(TAG, "Error: drive_off did not run\n");
+	}
 	/* Commented out to run Unit test
     xTaskCreate(task1_on, "LED ON", 2048, NULL, 3, NULL);
 
