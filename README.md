@@ -7,3 +7,9 @@ For verifiction testing, two tests were conducted. The first test used a stub fu
 * Input: Create task using "xTaskCreate()" for function "task2_off"
 * Expected Output: The LED does not light
 * Actual Output: The LED did not light
+
+## Testing blinking the LED
+* Pre-Conditions: GPIO 2 pin configured for the ESP8266, LED circuit connect to the GPIO 2 pin, 3.3V power supply
+* Input: Create tasks using "xTaskCreate()" for the function "task2_off" and "task1_on"
+* Expected Output: The LED blinks
+* Actual Output: The LED blinked
