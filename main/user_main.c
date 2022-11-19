@@ -148,7 +148,7 @@ void app_main(void)
     //create a mutux for the tasks
     xMutex = xSemaphoreCreateMutex();
 	
-	/*Verification Test for task2_off*/
+	/*Verification Test1 for task2_off*/
 
  	/*Stub to set GPIO 2 level to 1, i.e. LED ON*/
     gpio_set_level(GPIO_OUTPUT_IO, 1);
@@ -156,6 +156,7 @@ void app_main(void)
 	/*Create task to turn LED off*/
     xTaskCreate(task2_off, "LED OFF", 2048, NULL, 3, NULL);
 
+	/*Verifiction Test2 for task2_off*/
 	/*Create Task to turn LED on*/
-	xTaskCreate(task1_on, "LED OFF", 2048, NULL, 2, NULL);
+	//xTaskCreate(task1_on, "LED OFF", 2048, NULL, 2, NULL);
 }
