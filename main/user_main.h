@@ -106,6 +106,8 @@ static void task2_off(void *pvParameters)
 				/* We could not obtain the semaphore and can therefore not access
 				the shared resource safely. */
 			}
+            /*added break for unit testing*/
+            break;
 		}
 	}
 }
