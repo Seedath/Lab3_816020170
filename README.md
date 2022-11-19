@@ -4,7 +4,7 @@ For unit testing, the chosen function to test was task2_off. The user_main.c fil
 
 ## Testing task2_off
 
-Pre-Conditions: GPIO 2 pin configured for the ESP8266, LED circuit connect to the GPIO 2 pin, 3.3V power supply
-Input: Call "task2_off()", verify GPIO level by "gpio_get_level"
-Expected Output: "gpio_get_level" returns a value of 0 and passes the test
-Actual Output: "gpio_get_level" returns a value of 0 and passes the test
+*Pre-Conditions: GPIO 2 pin configured for the ESP8266, LED circuit connect to the GPIO 2 pin, 3.3V power supply
+*Input: Call "task2_off()", verify GPIO level by "gpio_get_level"
+*Expected Output: "gpio_get_level" returns a value of 0 and passes the test
+*Actual Output: "gpio_get_level" returns a value of 0 and passes the test
