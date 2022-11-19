@@ -24,7 +24,6 @@
 #include "esp_system.h"
 
 static const char *TAG = "main";
-
 /**
  * Brief:
  * This test code shows how to configure gpio and how to use gpio interrupt.
@@ -149,10 +148,14 @@ void app_main(void)
     //create a mutux for the tasks
     xMutex = xSemaphoreCreateMutex();
 	
-    xTaskCreate(task1_on, "LED ON", 2048, NULL, 3, NULL);
+	/*Verification Test for task2_off*/
 
-    xTaskCreate(task2_off, "LED OFF", 2048, NULL, 2, NULL);
+ 	/*Stub to set GPIO 2 level to 1, i.e. LED ON*/
+    gpio_set_level(GPIO_OUTPUT_IO, 1);
 
-    xTaskCreate(task3_print, "Print Status", 2048, NULL, 1, NULL);
+	/*Create task to turn LED off*/
+    xTaskCreate(task2_off, "LED OFF", 2048, NULL, 3, NULL);
+
+	/*Create Task to turn LED on*/
+	xTaskCreate(task1_on, "LED OFF", 2048, NULL, 2, NULL);
 }
-
