@@ -1,4 +1,6 @@
 user_main.o: /home/akshayseedath/esp/lab3/gpio/main/user_main.c \
+ /home/akshayseedath/esp/lab3/gpio/main/unit_test.h \
+ /home/akshayseedath/esp/lab3/gpio/main/user_main.h \
  /opt/esp_sdk/ESP8266_RTOS_SDK/components/freertos/include/freertos/FreeRTOS.h \
  /opt/esp_sdk/ESP8266_RTOS_SDK/components/freertos/port/esp8266/include/freertos/FreeRTOSConfig.h \
  /home/akshayseedath/esp/lab3/gpio/build/include/sdkconfig.h \
@@ -41,6 +43,10 @@ user_main.o: /home/akshayseedath/esp/lab3/gpio/main/user_main.c \
  /opt/esp_sdk/ESP8266_RTOS_SDK/components/log/include/esp_log_internal.h \
  /opt/esp_sdk/ESP8266_RTOS_SDK/components/esp8266/include/esp_system.h \
  /opt/esp_sdk/ESP8266_RTOS_SDK/components/esp8266/include/esp_idf_version.h
+
+/home/akshayseedath/esp/lab3/gpio/main/unit_test.h:
+
+/home/akshayseedath/esp/lab3/gpio/main/user_main.h:
 
 /opt/esp_sdk/ESP8266_RTOS_SDK/components/freertos/include/freertos/FreeRTOS.h:
 
